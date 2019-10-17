@@ -1,0 +1,109 @@
+<body>
+  <!-- ヘッダー -->
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <nav class="nav navbar-nav navbar-left">
+      <span>Bookers</span>
+      </nav>
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="">
+              <%= link_to "Home", root_path %>
+            </li>
+            <li class="">
+              <%= link_to 'Users', users_path %>
+            </li>
+            <li class="">
+              <%= link_to 'Books', books_path %>
+            </li>
+            <li class="">
+              <%= link_to 'logout', destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li class="">
+              <%= link_to "Home", root_path %>
+            </li>
+            <li class="">
+              <%= link_to 'About', home_about_path %>
+            </li>
+            <li class="">
+              <%= link_to 'sign up', new_user_registration_path %>
+            </li>
+            <li class="">
+              <%= link_to 'login', user_session_path %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+    <!-- プロフィール -->
+  <div class="profile_container">
+    <h2>User info</h2>
+    <%= form_for(@user) do |f| %>
+      <div class="form-group">
+        <div class="user-edit-image">
+          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
+        </div>
+      </div>
+    <% end %>
+    <table class="profile">
+      <tr>
+        <td>name</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td>introduction</td>
+        <td><%= @user.introduction %></td>
+      </tr>
+    </table>
+    <div class="row">
+  　　 <% if @user.id == current_user.id %>
+          <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
+      <% end %>
+    </div>
+    <h2>New book</h2>
+    <div class="field row">
+      <label for="book_title">Title</label>
+      <input class="col-xs-12 book_title" type="text" name="book[title]" id="book_title">
+    </div>
+    <div class="field row">
+      <label for="book_opinion">Opinion</label>
+      <textarea class="col-xs-12 book_body" name="book[body]" id="book_body"></textarea>
+    </div>
+    <div class="actions row">
+      <input type="submit" name="commit" value="Create Book" class="btn btn-primary col-xs-12" data-disable-with="Create Book">
+    </div>
+  </div>
+
+  <!-- ユーザ詳細 -->
+  <table>
+    <tr>
+      <th>images</th>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @users.each do |u| %>
+    <tr>
+      <td><%= attachment_image_tag u, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+      <td><%= u.name %></td>
+      <td><%= link_to "Show", user_path(u.id) %><td>
+    </tr>
+    <% end %>
+  </table>
+</body>
+
+
+
+
+
+
+
+
+
+
+

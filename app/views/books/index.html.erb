@@ -1,0 +1,96 @@
+<body>
+  <!-- ヘッダー -->
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <nav class="nav navbar-nav navbar-left">
+      <span>Bookers</span>
+      </nav>
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="">
+              <%= link_to "Home", root_path %>
+            </li>
+            <li class="">
+              <%= link_to 'Users', users_path %>
+            </li>
+            <li class="">
+              <%= link_to 'Books', books_path %>
+            </li>
+            <li class="">
+              <%= link_to 'logout', destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li class="">
+              <%= link_to "Home", root_path %>
+            </li>
+            <li class="">
+              <%= link_to 'About', home_about_path %>
+            </li>
+            <li class="">
+              <%= link_to 'sign up', new_user_registration_path %>
+            </li>
+            <li class="">
+              <%= link_to 'login', user_session_path %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+    <!-- プロフィール -->
+  <div class="profile_container">
+    <h2>User info</h2>
+    <%= form_for(@user) do |f| %>
+      <div class="form-group">
+        <div class="user-edit-image">
+          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
+        </div>
+      </div>
+    <% end %>
+    <table class="profile">
+      <tr>
+        <td>name</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td>introduction</td>
+        <td><%= @user.introduction %></td>
+      </tr>
+    </table>
+    <div class="row">
+  　　 <% if @user.id == current_user.id %>
+          <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
+      <% end %>
+    </div>
+
+    <!-- New Book -->
+    <h2>New book</h2>
+    <%= form_for(@book) do |b| %>
+	    <h4>Title</h4>
+	    <%= b.text_field :title %>
+	    <h4>Opinion</h4>
+	    <%= b.text_field :body %>
+	    <%= b.submit 'create book' %>
+		<% end %>
+
+  </div>
+
+  <!-- Books -->
+  <table>
+  	<h2>Books</h2>
+    <tr>
+      <th></th>
+      <th>Taitle</th>
+      <th>Opinion</th>
+    </tr>
+		<% @books.each do |b| %></td>
+	    <tr>
+				<td><%= attachment_image_tag b.user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+				<td><%= link_to b.title, book_path(b.id) %></td>
+				<td><%= b.body %></td>
+			</tr>
+		<% end %>
+  </table>
+</body>
