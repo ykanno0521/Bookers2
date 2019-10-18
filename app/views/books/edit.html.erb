@@ -1,0 +1,17 @@
+<body>
+	<!-- header テンプレート-->
+<%= render '/list' %>
+	<main>
+		<h1>Edit Book</h1>
+		<%= form_for(@book) do |b|%>
+			<h4>Title</h4>
+			<%= b.text_field :title %>
+			<h4>Opinion</h4>
+			<%= b.text_area :body %>
+			<br>
+			<%= b.submit 'update book'%>
+		<% end %>
+		<%= link_to 'show', book_path(@book.id) %>
+		<%= link_to 'back', books_path %>
+	</main>
+</body>

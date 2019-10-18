@@ -1,43 +1,6 @@
 <body>
-  <!-- ヘッダー -->
-  <header class="navbar navbar-fixed-top navbar-inverse">
-    <div class="container">
-      <nav class="nav navbar-nav navbar-left">
-      <span>Bookers</span>
-      </nav>
-      <nav>
-        <ul class="nav navbar-nav navbar-right">
-          <% if user_signed_in? %>
-            <li class="">
-              <%= link_to "Home", root_path %>
-            </li>
-            <li class="">
-              <%= link_to 'Users', users_path %>
-            </li>
-            <li class="">
-              <%= link_to 'Books', books_path %>
-            </li>
-            <li class="">
-              <%= link_to 'logout', destroy_user_session_path, method: :delete %>
-            </li>
-          <% else %>
-            <li class="">
-              <%= link_to "Home", root_path %>
-            </li>
-            <li class="">
-              <%= link_to 'About', home_about_path %>
-            </li>
-            <li class="">
-              <%= link_to 'sign up', new_user_registration_path %>
-            </li>
-            <li class="">
-              <%= link_to 'login', user_session_path %>
-            </li>
-          <% end %>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<!-- header テンプレート-->
+<%= render '/list' %>
 
     <!-- プロフィール -->
   <div class="profile_container">
@@ -65,7 +28,16 @@
       <% end %>
     </div>
     <h2>New book</h2>
-    <div class="field row">
+    <div class="newbook">
+      <%= form_for(@new_book) do |b|%>
+        <h4>Title</h4>
+        <%= b.text_field :title %>
+        <h4>Opinion</h4>
+        <%= b.text_area :body %>
+        <%= b.submit '投稿' %>
+      <% end %>
+    </div>
+  <!--   <div class="field row">
       <label for="book_title">Title</label>
       <input class="col-xs-12 book_title" type="text" name="book[title]" id="book_title">
     </div>
@@ -75,7 +47,7 @@
     </div>
     <div class="actions row">
       <input type="submit" name="commit" value="Create Book" class="btn btn-primary col-xs-12" data-disable-with="Create Book">
-    </div>
+    </div> -->
   </div>
 
   <!-- ユーザ詳細 -->
