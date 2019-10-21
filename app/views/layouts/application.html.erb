@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Bookers2</title>
+   <head>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookers2</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <nav class="nav navbar-nav navbar-left">
+      <span>Bookers</span>
+      </nav>
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="">
+              <%= link_to 'Home', user_path(current_user.id) %>
+            </li>
+            <li class="">
+              <%= link_to 'Users', users_path %>
+            </li>
+            <li class="">
+              <%= link_to 'Books', books_path %>
+            </li>
+            <li class="">
+              <%= link_to 'logout', destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li class="">
+              <%= link_to 'Home', root_path %>
+            </li>
+            <li class="">
+              <%= link_to 'About', home_about_path %>
+            </li>
+            <li class="">
+              <%= link_to 'sign up', new_user_registration_path %>
+            </li>
+            <li class="">
+              <%= link_to 'login', user_session_path %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <% if flash[:notice] %>
+    <p><%= flash[:notice] %></p>
+  <% end %>
+
+<!--     <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p> -->
     <%= yield %>
   </body>
 </html>

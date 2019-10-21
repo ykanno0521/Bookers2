@@ -1,5 +1,18 @@
 <body>
 	<h1>User Info</h1>
+
+<!-- エラーメッセージ -->
+	<% if @user.errors.any? %>
+	  <div id="error_explanation" class="alert alert-danger">
+	  	<h2><%= @user.errors.count %>error</h2>
+	    <ul>
+	      <% @user.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	    </ul>
+	  </div>
+	<% end %>
+
 	<%= form_for(@user) do |f| %>
 		<div class="form-group">
 			<label class="control-label sr-only" for="inputEmail">Name</label>
