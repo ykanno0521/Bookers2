@@ -10,70 +10,83 @@
       </ul>
     </div>
   <% end %>
-  
     <!-- プロフィール -->
-  <div class="profile_container">
-    <h2>User info</h2>
-    <%= form_for(@user) do |f| %>
-      <div class="form-group">
-        <div class="user-edit-image">
-          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
-        </div>
-      </div>
-    <% end %>
-    <table class="profile">
-      <tr>
-        <td>name</td>
-        <td><%= @user.name %></td>
-      </tr>
-      <tr>
-        <td>introduction</td>
-        <td><%= @user.introduction %></td>
-      </tr>
-    </table>
+  <div class="container">
     <div class="row">
-  　　 <% if @user.id == current_user.id %>
-          <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
-      <% end %>
-    </div>
+      <div class="col-lg-3">
+        <h2>User info</h2>
+        <%= form_for(@user) do |f| %>
+          <div class="form-group">
+            <div class="user-edit-image">
+              <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
+              <br>
+            </div>
+          </div>
+        <% end %>
+        <br>
+        <br>
+        <table class="table">
+          <thead>
+            <th></th>
+            <th></th>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </table>
+    　　 <% if @user.id == current_user.id %>
+          <%= link_to edit_user_path(@user.id), class: 'btn btn-default form-control' do %>
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+          <% end %>
+        <% end %>
 
-    <!-- New Book -->
-    <h2>New book</h2>
-    <%= form_for(@new_book) do |b| %>
-      <h4>Title</h4>
-      <%= b.text_field :title %>
-      <h4>Opinion</h4>
-      <%= b.text_field :body %>
-      <%= b.submit 'create book' %>
-    <% end %>
-  </div>
+        <!-- New Book -->
+        <h2>New book</h2>
+        <%= form_for(@new_book) do |b| %>
+          <h4>Title</h4>
+          <%= b.text_field :title, class: 'form-control' %>
+          <h4>Opinion</h4>
+          <%= b.text_area :body, class: 'form-control' %>
+          <br>
+          <%= b.submit 'create book', class: "btn btn-primary form-control" %>
+        <% end %>
+      </div>
 
     <!-- book detail -->
-  <table>
-  	<h2>Book detail</h2>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    <tr>
-    	<td>
-        <%= link_to user_path(@book.user) do %>
-          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %><br>
-          <%= @user.name%>
-        <% end%>
-      </td>
-    	<td><%= link_to @book.title, book_path %></td>
-    	<td><%= @book.body %></td>
-      <% if @user.id == current_user.id %>
-        <td><%= link_to 'edit', edit_book_path %></td>
-	  	  <td><%= link_to 'destroy', book_path(@book.id), method: :delete %></td>
-      <% else %>
-        <td></td>
-        <td></td>
-      <% end %>
-    </tr>
-  </table>
+      <div class="col-lg-9">
+        <table class="table">
+        	<h2>Book detail</h2>
+          <thead>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </thead>
+          <tr>
+          	<td>
+              <%= link_to user_path(@book.user) do %>
+                <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %><br><br><br>
+                <%= @user.name%>
+              <% end%>
+            </td>
+          	<td><%= link_to @book.title, book_path %></td>
+          	<td><%= @book.body %></td>
+            <% if @user.id == current_user.id %>
+              <td><%= link_to 'edit', edit_book_path %></td>
+      	  	  <td><%= link_to 'destroy', book_path(@book.id), method: :delete %></td>
+            <% else %>
+              <td></td>
+              <td></td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>

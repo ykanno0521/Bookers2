@@ -15,5 +15,4 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
-@import "bootstrap-sprockets";  /*ここを追加*/
-@import "bootstrap";            /*ここを追加*/
+

@@ -12,56 +12,71 @@
     <% end %>
 
     <!-- プロフィール -->
-  <div class="profile_container">
-    <h2>User info</h2>
-    <%= form_for(@user) do |f| %>
-      <div class="form-group">
-        <div class="user-edit-image">
-          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
-        </div>
-      </div>
-    <% end %>
-    <table class="profile">
-      <tr>
-        <td>name</td>
-        <td><%= @user.name %></td>
-      </tr>
-      <tr>
-        <td>introduction</td>
-        <td><%= @user.introduction %></td>
-      </tr>
-    </table>
+  <div class="container">
     <div class="row">
-      <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
-    </div>
+      <div class="col-lg-3">
+        <h2>User info</h2>
+        <%= form_for(@user) do |f| %>
+          <div class="form-group">
+            <div class="user-edit-image">
+              <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg"%>
+              <br>
+            </div>
+          </div>
+        <% end %>
 
-    <!-- New Book -->
+        <table class="table">
+          <thead>
+            <th></th>
+            <th></th>
+          <thead>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </table>
+    　　 <% if @user.id == current_user.id %>
+          <%= link_to edit_user_path(@user.id), class: 'btn btn-default form-control' do %>
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+          <% end %>
+        <% end %>
 
-    <h2>New book</h2>
-    <%= form_for(@book) do |b| %>
-	    <h4>Title</h4>
-	    <%= b.text_field :title %>
-	    <h4>Opinion</h4>
-	    <%= b.text_field :body %>
-	    <%= b.submit 'create book' %>
-		<% end %>
+        <!-- New Book -->
 
-  </div>
+        <h2>New book</h2>
+        <%= form_for(@book) do |b| %>
+    	    <h4>Title</h4>
+    	    <%= b.text_field :title, class: 'form-control'%>
+    	    <h4>Opinion</h4>
+    	    <%= b.text_area :body, class: 'form-control' %>
+          <br>
+    	    <%= b.submit 'create book', class: "btn btn-primary form-control"%>
+    		<% end %>
+      </div>
+
 
   <!-- Books -->
-  <table>
-  	<h2>Books</h2>
-    <tr>
-      <th></th>
-      <th>Taitle</th>
-      <th>Opinion</th>
-    </tr>
-		<% @books.each do |b| %></td>
-	    <tr>
-				<td><%= attachment_image_tag b.user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
-				<td><%= link_to b.title, book_path(b.id) %></td>
-				<td><%= b.body %></td>
-			</tr>
-		<% end %>
-  </table>
+      <div class="col-lg-9">
+        <table class="table">
+        	<h2>Books</h2>
+          <thead>
+            <th></th>
+            <th>Taitle</th>
+            <th>Opinion</th>
+          </thead>
+      		<% @books.each do |b| %></td>
+      	    <tr>
+      				<td><%= attachment_image_tag b.user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+      				<td><%= link_to b.title, book_path(b.id) %></td>
+      				<td><%= b.body %></td>
+      			</tr>
+      		<% end %>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>
